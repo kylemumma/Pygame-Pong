@@ -15,6 +15,7 @@ class Ball:
         if(self.__xVel == 0 or self.__yVel == 0):
             self.setRandomVel()
         '''
+
         self.__xVel = 4
         self.__yVel = 2
 
