@@ -1,9 +1,13 @@
 import pygame, paddle, ball, random
 
-#make paddles
+#make paddles and ball
 player1 = paddle.Paddle()
 player2 = paddle.Paddle()
 ball = ball.Ball()
+
+#make time vars
+time = 0
+last_time = 0
 
 def keepPaddlesInBound():
     #keep player1 paddle within bounds
@@ -102,11 +106,11 @@ def gameLoop(screen, background, player1_surface, player2_surface, ball_surface,
             #--- PLAYER 1 MOVEMENT ---
             #if w key pressed
             if(event.type == pygame.KEYDOWN and event.key == pygame.K_w):
-                player1.setUpVel(1)
+                player1.setUpVel(4)
 
             #if s key pressed
             if(event.type == pygame.KEYDOWN and event.key == pygame.K_s):
-                player1.setDownVel(1)
+                player1.setDownVel(4)
 
             #if w key released
             if(event.type == pygame.KEYUP and event.key == pygame.K_w):
@@ -119,11 +123,11 @@ def gameLoop(screen, background, player1_surface, player2_surface, ball_surface,
             #--- PLAYER 2 MOVEMENT ---
             #if up key pressed
             if(event.type == pygame.KEYDOWN and event.key == pygame.K_UP):
-                player2.setUpVel(1)
+                player2.setUpVel(4)
 
             #if down key pressed
             if(event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN):
-                player2.setDownVel(1)
+                player2.setDownVel(4)
 
             #if up key released
             if(event.type == pygame.KEYUP and event.key == pygame.K_UP):
@@ -133,11 +137,16 @@ def gameLoop(screen, background, player1_surface, player2_surface, ball_surface,
             if(event.type == pygame.KEYUP and event.key == pygame.K_DOWN):
                 player2.setDownVel(0)
 
-        simulatePhysics()
+        global time
+        global last_time
+        time = pygame.time.get_ticks()
 
-        processCollisions()
+        if(time - last_time >= 10):
+            simulatePhysics()
+            processCollisions()
+            last_time = time
 
-        repaint(screen, background, player1_surface, player2_surface, ball_surface, font)
+            repaint(screen, background, player1_surface, player2_surface, ball_surface, font)
 
 def main():
     #init pygame
@@ -157,6 +166,11 @@ def main():
     player1_surface = pygame.Surface((25, 100))
     player2_surface = pygame.Surface((25, 100))
     ball_surface = pygame.Surface((10, 10))
+
+    global time
+    global last_time
+    time = pygame.time.get_ticks()
+    last_time = pygame.time.get_ticks()
 
     gameLoop(screen, background, player1_surface, player2_surface, ball_surface, font)
 

@@ -15,8 +15,8 @@ class Ball:
         if(self.__xVel == 0 or self.__yVel == 0):
             self.setRandomVel()
         '''
-        self.__xVel = 1
-        self.__yVel = .5
+        self.__xVel = 4
+        self.__yVel = 2
 
         if(random.randint(-1, 1) > 0):
             self.__xVel *= -1
